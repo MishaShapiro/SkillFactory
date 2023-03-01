@@ -23,6 +23,8 @@ class Figurs: # Класс всех фигур на доске
     def move_to(self, x, y):
         if (x, y) in desk.all_moves:
             self.start_position = (x, y)
+            self.x = x
+            self.y = y
         else:
             print("Нельзя выполнить это действие")
 
@@ -249,4 +251,6 @@ a.can_move()
 desk.draw_desk()
 a.move_to(4, 1)
 f.can_move()
+desk.draw_desk()
+a.can_move()
 desk.draw_desk()
