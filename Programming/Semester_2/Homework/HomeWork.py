@@ -1,54 +1,76 @@
 import pygame
 
-class Figurs: # Класс всех фигур на доске
+
+class Figurs:  # Класс всех фигур на доске
 
     def __init__(self, x, y, color):
-        self.color = color # Цвет фигуры (белый или чёрный)
-        self.start_position = (x, y) # Стартовая позиция фигуры
-        self.x = x
-        self.y = y
-        self.attacked = False # Обозначение, атакована ли фигура
-        self.moves = [] # Все возможные ходы фигуры
-        self.chosen = False
+        self._color = color  # Цвет фигуры (белый или чёрный)
+        self._start_position = (x, y)  # Стартовая позиция фигуры
+        self._x = x
+        self._y = y
+        self._attacked = False  # Обозначение, атакована ли фигура
+        self._moves = []  # Все возможные ходы фигуры
+        self._chosen = False
 
-    def can_move(self, mass): # Метод для нахождения вариантов хода
-        for i in desk.figurs: # приравнивание всех атрибутов выбора на False
-            i.chosen = False
-        mass.remover() # метод удаляющий невозможные ходы
-        self.moves = mass.move # обновление атрибута фигуры
-        desk.all_moves = mass.move # добавление в атрибут доски все видимые пути
-        self.chosen = True
-        desk.upload()
+    def can_move(self, mass):  # Метод для нахождения вариантов хода
+        for i in desk._figurs:  # приравнивание всех атрибутов выбора на False
+            i._chosen = False
+        mass._remover()  # метод удаляющий невозможные ходы
+        self._moves = mass._move  # обновление атрибута фигуры
+        desk._all_moves = mass._move  # добавление в атрибут доски все видимые пути
+        self._chosen = True
+        desk._upload()
 
     def move_to(self, x, y):
-        if (x, y) in desk.all_moves:
-            self.start_position = (x, y)
-            self.x = x
-            self.y = y
+        y_dict = {"A": 0, "B": 1, "C": 2, "D": 3, "E": 4, "F": 5, "G": 6, "H": 7}
+        x = x - 1
+        y = y_dict[y]
+        if (x, y) in desk._all_moves:
+            self._start_position = (x, y)
+            self._x = x
+            self._y = y
         else:
             print("Нельзя выполнить это действие")
+        desk._upload()
+        desk._all_moves = []
 
-class Desk: # класс шахматной доски
+    def get_name(self, name):
+        y_de_dict = {0: "A", 1: "B", 2: "C", 3: "D", 4: "E", 5: "F", 6: "G", 7: "H"}
+        print("У выбранной фигуры название:", name)
+        print("И позиция:", self._x + 1, y_de_dict[self._y])
+
+
+class _Desk:  # класс шахматной доски
 
     def __init__(self, figurs):
-        self.dicter = {} # словарь с ключами: стартовыми позициями, значениями: фигурами
-        self.figurs = figurs # все фигуры на доске
-        self.all_moves = [] # все возможные ходы выбранной фигуры
+        self._dicter = {}  # словарь с ключами: стартовыми позициями, значениями: фигурами
+        self._figurs = figurs  # все фигуры на доске
+        self._all_moves = []  # все возможные ходы выбранной фигуры
         position_in_desk = []
-        for i in self.figurs: # позиции всех фигур на доске
-            self.dicter[i.start_position] = i
-            position_in_desk.append(i.start_position)
-        self.position_in_desk = position_in_desk # создание атрибута с таким массивом
+        for i in self._figurs:  # позиции всех фигур на доске
+            self._dicter[i._start_position] = i
+            position_in_desk.append(i._start_position)
+        self._position_in_desk = position_in_desk  # создание атрибута с таким массивом
 
-    def upload(self):
-        self.dicter = {}
+    def create_table(self, figurs): # Метод для добавления фигур на доску в другом файле
+        self._dicter = {}  # словарь с ключами: стартовыми позициями, значениями: фигурами
+        self._figurs = figurs  # все фигуры на доске
+        self._all_moves = []  # все возможные ходы выбранной фигуры
         position_in_desk = []
-        for i in self.figurs:  # переопределение позиций фигур
-            self.dicter[i.start_position] = i
-            position_in_desk.append(i.start_position)
-        self.position_in_desk = position_in_desk
+        for i in self._figurs:  # позиции всех фигур на доске
+            self._dicter[i._start_position] = i
+            position_in_desk.append(i._start_position)
+        self._position_in_desk = position_in_desk  # создание атрибута с таким массивом
 
-    def draw_desk(self): # отрисовка доски
+    def _upload(self):
+        self._dicter = {}
+        position_in_desk = []
+        for i in self._figurs:  # переопределение позиций фигур
+            self._dicter[i._start_position] = i
+            position_in_desk.append(i._start_position)
+        self._position_in_desk = position_in_desk
+
+    def draw_desk(self):  # отрисовка доски
         # стандартный вызов окна pygame
 
         pixels = 60
@@ -78,21 +100,22 @@ class Desk: # класс шахматной доски
                 if event.type == pygame.QUIT:
                     running = 0
             screen.fill((200, 200, 200))
-            for i in range(0, 8): # проход по всем клеткам доски и их отрисовка в зависимости от параметров
+            for i in range(0, 8):  # проход по всем клеткам доски и их отрисовка в зависимости от параметров
                 for j in range(0, 8):
-                    if (i, j) in self.dicter.keys(): # на этой клетке стоит фигура
-                        color_fig = self.dicter[(i, j)].color
-                        sym = self.dicter[(i, j)].name
+                    if (i, j) in self._dicter.keys():  # на этой клетке стоит фигура
+                        color_fig = self._dicter[(i, j)]._color
+                        sym = self._dicter[(i, j)]._name
                         if color_fig == "Black":
                             color_sym = "White"
                         else:
                             color_sym = "Black"
                         pygame.draw.rect(screen, color_fig, (100 + j * pixels, 100 + i * pixels, pixels, pixels))
-                        if sym != "Kn": # отрисовка названия фигуры
+                        if sym != "Kn":  # отрисовка названия фигуры
                             screen.blit(f2.render(sym, True, color_sym), (115 + j * pixels, 110 + i * pixels))
                         else:
                             screen.blit(f2.render(sym, True, color_sym), (100 + j * pixels, 110 + i * pixels))
-                    elif (i, j) in self.all_moves: # при вызове метода can_move фигура берётся в руку ==> показываются все ходы фигуры
+                    elif (i,
+                          j) in self._all_moves:  # при вызове метода can_move фигура берётся в руку ==> показываются все ходы фигуры
                         pygame.draw.rect(screen, (255, 230, 0), (100 + j * pixels, 100 + i * pixels, pixels, pixels))
                     elif (i + j) % 2 == 0:
                         pygame.draw.rect(screen, (156, 156, 156), (100 + j * pixels, 100 + i * pixels, pixels, pixels))
@@ -112,66 +135,81 @@ class Desk: # класс шахматной доски
 
         pygame.quit()
 
-class Positions(Desk): # дочерний класс позиций на доске
+
+class Positions(_Desk):  # дочерний класс позиций на доске
 
     def __init__(self, move):
-        super(Positions, self).__init__(desk.figurs)
-        self.move = move # создание атрибута со всеми путями для определённой фигуры
+        super(Positions, self).__init__(desk._figurs)
+        self._move = move  # создание атрибута со всеми путями для определённой фигуры
 
-    def remover(self): # метод удаления всех невозможных ходов
+    def _remover(self):  # метод удаления всех невозможных ходов
         new_move = []
-        for i in self.move:
-            if i[0] >= 0 and i[1] >= 0 and i[0] <= 7 and i[1] <= 7 and not(i in self.position_in_desk):
+        for i in self._move:
+            if i[0] >= 0 and i[1] >= 0 and i[0] <= 7 and i[1] <= 7 and not (i in self._position_in_desk):
                 new_move.append(i)
-        self.move = new_move
+        self._move = new_move
 
-class King(Figurs): # король
+
+class King(Figurs):  # король
 
     def __init__(self, x, y, color):
         super(King, self).__init__(x, y, color)
-        self.name = "K"
+        self._name = "K"
 
-    def can_move(self): # метод нахождения всех возможных ходов фигуры
-        mass = Positions([(self.x + i, self.y + j) for i in range(-1, 2) for j in range(-1, 2) if i != 0 or j != 0])
-        super(King, self).can_move(mass) # возвращение в метод родительского класса
+    def can_move(self):  # метод нахождения всех возможных ходов фигуры
+        mass = Positions([(self._x + i, self._y + j) for i in range(-1, 2) for j in range(-1, 2) if i != 0 or j != 0])
+        super(King, self).can_move(mass)  # возвращение в метод родительского класса
+
+    def get_name(self):
+        super(King, self).get_name(self._name)
 
         # у остальных фигур аналогичный код отвечает за то же
+
 
 class Peshka(Figurs):
 
     def __init__(self, x, y, color):
         super(Peshka, self).__init__(x, y, color)
-        self.name = "P"
+        self._name = "P"
 
     def can_move(self):
-        if self.color == "White": # по цыету разные стороны
-            mass = Positions([(self.x + 1, self.y)])
+        if self._color == "White":  # по цыету разные стороны
+            mass = Positions([(self._x + 1, self._y)])
         else:
-            mass = Positions([(self.x - 1, self.y)])
+            mass = Positions([(self._x - 1, self._y)])
         super(Peshka, self).can_move(mass)
+
+    def get_name(self):
+        super(Peshka, self).get_name(self._name)
+
 
 class Knight(Figurs):
 
     def __init__(self, x, y, color):
         super(Knight, self).__init__(x, y, color)
-        self.name = "Kn"
+        self._name = "Kn"
 
     def can_move(self):
-        mass = Positions([(self.x + i, self.y + j) for i in range(-2, 3) for j in range(-2, 3) if abs(i) + abs(j) == 3])
+        mass = Positions(
+            [(self._x + i, self._y + j) for i in range(-2, 3) for j in range(-2, 3) if abs(i) + abs(j) == 3])
         super(Knight, self).can_move(mass)
+
+    def get_name(self):
+        super(Knight, self).get_name(self._name)
+
 
 class Eleph(Figurs):
 
     def __init__(self, x, y, color):
         super(Eleph, self).__init__(x, y, color)
-        self.name = "E"
+        self._name = "E"
 
     def can_move(self):
         # удаляет все возможные перепрыгивания через фигуры
-        pit = desk.position_in_desk # все фигуры на доске
+        pit = desk._position_in_desk  # все фигуры на доске
         res1 = []
         res2 = []
-        x, y = self.x, self.y
+        x, y = self._x, self._y
         # прохождение по диагонали и удаление всех перепрыгивний
         for i in range(-7, 8):
             if 0 <= x + i <= 7 and 0 <= y + i <= 7 and i != 0:
@@ -191,18 +229,22 @@ class Eleph(Figurs):
         mass = Positions(res1 + res2)
         super(Eleph, self).can_move(mass)
 
+    def get_name(self):
+        super(Eleph, self).get_name(self._name)
+
+
 class Ladia(Figurs):
 
     def __init__(self, x, y, color):
         super(Ladia, self).__init__(x, y, color)
-        self.name = "L"
+        self._name = "L"
 
     def can_move(self):
         # Аналогично, как у слона, только другой направление
-        pit = desk.position_in_desk
+        pit = desk._position_in_desk
         res1 = []
         res2 = []
-        x, y = self.x, self.y
+        x, y = self._x, self._y
         for i in range(-7, 8):
             if 0 <= x + i <= 7 and i != 0:
                 res1.append((x + i, y))
@@ -221,36 +263,27 @@ class Ladia(Figurs):
         mass = Positions(res1 + res2)
         super(Ladia, self).can_move(mass)
 
+    def get_name(self):
+        super(Ladia, self).get_name(self._name)
+
+
 class Ferz(Figurs):
 
     def __init__(self, x, y, color):
         super(Ferz, self).__init__(x, y, color)
-        self.name = "F"
+        self._name = "F"
 
     def can_move(self):
         # совмещение ходов слона и ладьи
-        eleph = Eleph(self.x, self.y, self.color)
+        eleph = Eleph(self._x, self._y, self._color)
         eleph.can_move()
-        ladia = Ladia(self.x, self.y, self.color)
+        ladia = Ladia(self._x, self._y, self._color)
         ladia.can_move()
-        mass = Positions(eleph.moves + ladia.moves)
+        mass = Positions(eleph._moves + ladia._moves)
         super(Ferz, self).can_move(mass)
 
-a = Ladia(0, 1, "Black")
-b = Peshka(5, 6, "White")
-c = Knight(5, 1, "Black")
-d = Eleph(3, 2, "White")
-e = Ladia(2, 2, "Black")
-f = Ferz(4, 4, "White")
-mass = [a, b, c, d, e, f]
-desk = Desk(mass)
-desk.draw_desk()
-c.can_move()
-desk.draw_desk()
-a.can_move()
-desk.draw_desk()
-a.move_to(4, 1)
-f.can_move()
-desk.draw_desk()
-a.can_move()
-desk.draw_desk()
+    def get_name(self):
+        super(Ferz, self).get_name(self._name)
+
+desk = _Desk([])
+
