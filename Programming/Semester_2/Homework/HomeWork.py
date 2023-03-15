@@ -1,7 +1,7 @@
 import pygame
+from abc import ABC, abstractmethod
 
-
-class Figurs:  # Класс всех фигур на доске
+class Figurs(ABC):  # Класс всех фигур на доске
 
     def __init__(self, x, y, color):
         self._color = color  # Цвет фигуры (белый или чёрный)
@@ -12,6 +12,10 @@ class Figurs:  # Класс всех фигур на доске
         self._moves = []  # Все возможные ходы фигуры
         self._chosen = False
 
+    def __add__(self, other): # Перегрузка для Ферзя
+        return self._moves + other._moves
+
+    @abstractmethod
     def can_move(self, mass):  # Метод для нахождения вариантов хода
         for i in desk._figurs:  # приравнивание всех атрибутов выбора на False
             i._chosen = False
@@ -272,18 +276,20 @@ class Ferz(Figurs):
     def __init__(self, x, y, color):
         super(Ferz, self).__init__(x, y, color)
         self._name = "F"
+        self.eleph = Eleph(self._x, self._y, self._color) # Композиция
+        self.ladia = Ladia(self._x, self._y, self._color)
+
 
     def can_move(self):
+        self.eleph = Eleph(self._x, self._y, self._color)
+        self.ladia = Ladia(self._x, self._y, self._color)
         # совмещение ходов слона и ладьи
-        eleph = Eleph(self._x, self._y, self._color)
-        eleph.can_move()
-        ladia = Ladia(self._x, self._y, self._color)
-        ladia.can_move()
-        mass = Positions(eleph._moves + ladia._moves)
+        self.eleph.can_move()
+        self.ladia.can_move()
+        mass = Positions(self.eleph + self.ladia)
         super(Ferz, self).can_move(mass)
 
     def get_name(self):
         super(Ferz, self).get_name(self._name)
 
 desk = _Desk([])
-
