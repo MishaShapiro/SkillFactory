@@ -29,6 +29,7 @@ body, html, p, button {
 
 main {
 	background: black;
+	min-width: 1345px;
 }
 
 .container {
