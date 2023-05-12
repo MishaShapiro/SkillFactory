@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital@0;1&family=Yeseva+One&display=swap" rel="stylesheet">
+	<title>Slider</title>
+</head>
+<body>
+	<main>
+		<div class="container">
+			<div class="information">
+				<div class="block1">
+					<p class="information__heading text_style_yes text_color_y">Completed projects</p>
+					<div class="svg__line">
+						<svg width="92" height="1" viewBox="0 0 92 1" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<rect x="-0.00012207" y="-0.00012207" width="92" height="1" fill="#E3B873"/>
+						</svg>
+					</div>
+				</div>
+				<div class="block2">
+					<p class="information__paragraph text_style_nun text_color_w">Only a small part of the work performed by our company is presented on the site. For 14 years on in the construction <br> 
+					market we have made happy more than 1000 families</p>
+				</div>
+				<div class="block3 main_info">
+					<p class="information__smallheading text_style_yes text_color_y">City:</p>
+					<p class="city_text text_style_nun text_color_w blockinfo">Rostov-on-Don LCD admiral</p>
+				</div>
+				<div class="block4 main_info">
+					<p class="information__smallheading text_style_yes text_color_y">apartment area:</p>
+					<p class="apartment_text  text_style_nun text_color_w blockinfo">81 m2</p>
+				</div>
+				<div class="block5 main_info">
+					<p class="information__smallheading text_style_yes text_color_y">Repair time:</p>
+					<p class="repairtime_text  text_style_nun text_color_w blockinfo">3.5 months</p>
+				</div>
+				<div class="block6 main_info">
+					<p class="information__smallheading text_style_yes text_color_y">Repair Cost:</p>
+					<p class="repaircost_text  text_style_nun text_color_w blockinfo">Upon request</p>
+				</div>
+				<div class="buttons">
+					<button class="prev button">
+						<svg width="42" height="14" viewBox="0 0 42 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path fill-rule="evenodd" clip-rule="evenodd" d="M6.63807 13.276L2.29917e-05 6.638L6.63807 -3.82298e-05L7.58563 0.94753L1.89516 6.638L7.58563 12.3285L6.63807 13.276Z" fill="white"/>
+						<path fill-rule="evenodd" clip-rule="evenodd" d="M0.94758 5.9681L41.4556 5.9681L41.4556 7.30817L0.94758 7.30816L0.94758 5.9681Z" fill="white"/>
+						</svg>
+					</button>
+					<button class="point1 button" onclick="slide(0)">
+						<svg class="svg1" width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<rect x="0.952759" y="0.456207" width="9.56667" height="9.56667" rx="4.78333" fill="white"/>
+						</svg>
+					</button>
+					<button class="point2 button" onclick="slide(1)">
+						<svg class="svg2" width="10" height="11" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<rect x="0.163879" y="0.45636" width="9.56667" height="9.56667" rx="4.78333" fill="white"/>
+						</svg>
+					</button>
+					<button class="point3 button" onclick="slide(2)">
+						<svg class="svg3"  width="10" height="11" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<rect x="0.163879" y="0.45636" width="9.56667" height="9.56667" rx="4.78333" fill="white"/>
+						</svg>
+					</button>
+					<button class="next button">
+						<svg width="42" height="14" viewBox="0 0 42 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path fill-rule="evenodd" clip-rule="evenodd" d="M35.0451 -0.000183105L41.6831 6.63786L35.0451 13.2759L34.0975 12.3283L39.788 6.63786L34.0975 0.947384L35.0451 -0.000183105Z" fill="white"/>
+						<path fill-rule="evenodd" clip-rule="evenodd" d="M40.7355 7.30776L0.227539 7.30776L0.227539 5.9677L40.7355 5.9677L40.7355 7.30776Z" fill="white"/>
+						</svg>
+					</button>
+				</div>
+			</div>
+			<div class="slider">
+				<div class="links">
+					<p class="link_text text_style_yes">Rostov-on-Don, Admiral</p>
+					<p class="link_text text_style_yes">Sochi Thieves</p>
+					<p class="link_text text_style_yes">Rostov-on-Don Patriotic</p>
+				</div>
+				<div class="photos">
+					<img class="img" alt="photo of apartment" src="img/image 2.1.png">
+				</div>
+			</div>	
+		</div>	
+	</main>
+	<script type="text/javascript" src="js/index.js"></script>
+</body>
+</html>
